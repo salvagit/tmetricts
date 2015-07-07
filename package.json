@@ -1,0 +1,20 @@
+{
+    "name": "tmonitor",
+    "version": "0.0.1",
+    "description": "Ejemplo de consumor y stats en twitter",
+    "dependencies": {
+    "argsparser": "~0.0.6",
+        "body-parser": "*",
+        "express": "~4.*",
+        "express-session": "^1.10.2",
+        "mongojs": "*",
+        "express-handlebars": "*"
+},
+    "repository": {
+    "type": "git",
+        "url": "https://github.com/lortmorris/tmetricts.git"
+},
+    "author": "Cesar Casas",
+    "license": "BSD-2-Clause"
+}
+
