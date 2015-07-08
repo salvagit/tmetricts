@@ -7,8 +7,6 @@ var mongojs = require("mongojs");
 var db = mongojs(conf.mongo.db, conf.mongo.collections);
 
 
-
-
 var context = {
     db : db
     ,args : args
@@ -48,8 +46,27 @@ var candidato = function(){
 
 
 
+    var addkey = function(){
+        var key = args['-key'] || "";
+        var can = args['-can'] || "";
+        if(key=="" || can=="") {
+            console.log("No key, error");
+            process.exit();
+        }
+
+        new candidatos().addKey(can, key,function(err, dat){
+            if(err){ console.log(err); }
+            else{
+                console.log("la keyword fue agregada con éxito");
+            }
+            process.exit();
+        });
+
+    };
+
     switch (act){
         case 'add': add(); break;
+        case 'key': addkey(); break;
         case '':default:
             console.log("no act");
             break;

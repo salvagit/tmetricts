@@ -30,5 +30,17 @@ module.exports = function(context){
                     }
             });
         };
-    }
+
+        this.addKey = function(id, key, cb){
+            context.db.keywords.save({
+                keyword: key
+                ,candidato: id
+            }, function(err, docs){
+                if(err){ cb(err,null);}
+                else{
+                    cb(null, docs);
+                }
+            });
+        };
+    };
 };
