@@ -41,6 +41,8 @@ var candidato = function(){
         new candidatos().add(params, function(err, data){
             if(err){ console.log(err);}
             else console.log("Candidato agregado ok");
+
+            process.exit();
         });
     };
 

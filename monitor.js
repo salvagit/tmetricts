@@ -14,8 +14,6 @@ var context = {
 };
 
 
-var candidatos = require("./candidatos")(context);
-
 var Twitter = require('node-twitter');
 
 var twitterStreamClient = new Twitter.StreamClient(
@@ -44,10 +42,17 @@ var keywords = [];
 
 
 var tAction = function(tweet){
+    var keys = [];
+
     for(var x=0; x<keywords.length; x++){
-        if(tweet.indexOf(keywords[x]>-1)) tweet.keyword = keywords[x];
+        if(tweet.text.indexOf(keywords[x])>-1){
+            console.log("DEBUG: >", tweet.text, keywords[x]);
+            keys.push(keywords[x]);
+        }
     }//end for
 
+    tweet.keywords = keys;
+    console.log("Llego: ", tweet);
     db.hits.save(tweet);
 
 };
