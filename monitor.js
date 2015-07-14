@@ -14,6 +14,11 @@ var context = {
 };
 
 
+var stats = require("./libs/stats")(context);
+new stats().init();
+
+
+
 var Twitter = require('node-twitter');
 
 var twitterStreamClient = new Twitter.StreamClient(
@@ -39,7 +44,7 @@ twitterStreamClient.on('error', function(error) {
 
 
 var keywords = [];
-
+var tweetsStore = [];
 
 var tAction = function(tweet){
     var keys = [];
@@ -52,10 +57,19 @@ var tAction = function(tweet){
     }//end for
 
     tweet.keywords = keys;
-    console.log("Llego: ", tweet);
-    db.hits.save(tweet);
+    tweet.process = false;
 
+    console.log("Llego: ", tweet.text, tweet.keywords);
+    tweetsStore.push(tweet);
 };
+
+
+var saveController = function(){
+    var tweet = tweetsStore.shift();
+    if(tweet) db.hits.save(tweet);
+};
+
+setInterval(saveController, 100);
 
 
 db.keywords.find({}, {}, function(err, docs){

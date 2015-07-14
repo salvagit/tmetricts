@@ -35,6 +35,7 @@ module.exports = function(context){
             context.db.keywords.save({
                 keyword: key
                 ,candidato: id
+                ,count: 0
             }, function(err, docs){
                 if(err){ cb(err,null);}
                 else{
