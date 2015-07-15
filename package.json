@@ -4,9 +4,9 @@
   "description": "Ejemplo de consumor y stats en twitter",
   "dependencies": {
     "argsparser": "~0.0.6",
-    "body-parser": "*",
-    "express": "~4.*",
-    "express-handlebars": "*",
+    "body-parser": "^1.13.2",
+    "express": "^4.13.1",
+    "express-handlebars": "^2.0.1",
     "express-session": "^1.10.2",
     "mongojs": "*",
     "node-twitter": "^0.5.2"
