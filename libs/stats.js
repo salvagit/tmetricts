@@ -39,20 +39,37 @@ module.exports = function(context){
         var updateKeywordsStats = function(){
             console.log("updateKeywordsStats");
 
-
+                var candidatos = {};
                 for(var x in _this.keys){
-                var key = _this.keys[x];
+                    var key = _this.keys[x];
 
-                (function(k){
-                    _this.db.keywords.update({_id: _this.db.ObjectId(k._id.toString())}
-                                            , {$set: {count: k.count}}, function(err, d){
-                            if(err){ console.log("Error update key: ", k);}
-                            else{
-                                console.log("Update key ok");
-                            }
-                        });
+                    typeof candidatos[key.candidato]=="undefined"
+                                                    ? candidatos[key.candidato] = {count: key.count}
+                                                    : candidatos[key.candidato].count+=key.count;
+
+
+                    (function(k){
+                        _this.db.keywords.update({_id: _this.db.ObjectId(k._id.toString())}
+                                                , {$set: {count: k.count}}, function(err, d){
+                                if(err){ console.log("Error update key: ", k);}
+                                else{
+                                    //console.log("Update key ok");
+                                }
+                            });
                 })(key);
-            }//end for
+            }//end for keywords
+
+
+            for(var x in candidatos){
+
+                (function(can){
+                    _this.db.candidatos.update({_id: _this.db.ObjectId(x)}
+                                    , {$set:{count: can.count}}, function(err, d){
+                                if(err){ console.log("Error update candidato: ", can);}
+                                else{ }
+                        });
+                })(candidatos[x]);
+            }//end for candidatos
         };
 
         var loadKeywords = function(cb){
