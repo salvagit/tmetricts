@@ -37,7 +37,6 @@ module.exports = function(context){
 
 
         var updateKeywordsStats = function(){
-            console.log("updateKeywordsStats");
 
                 var candidatos = {};
                 for(var x in _this.keys){
@@ -93,7 +92,7 @@ module.exports = function(context){
                     for(var x=0; x<docs.length; x++) new process(docs[x]);
                 }//end else
 
-                updateKeywordsStats();
+                if(docs.length>0) updateKeywordsStats();
             });
         };
 
