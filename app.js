@@ -31,6 +31,9 @@ app.set('views', './views');
 app.use(express.static(__dirname + '/public'));
 
 app.use(function(req, res, next){
+
+    res.set('Access-Control-Allow-Origin', '*');
+
    res.out =  function(err, docs){
        if(err){ res.json({err: err, data: null});}
        else{
@@ -56,6 +59,14 @@ app.get("/info/candidatos", function(req, res, nex){
        res.out(err, docs);
    });
 });
+
+
+app.get("/info/keywords", function(req, res, nex){
+    db.keywords.find({}, {}, function(err, docs){
+        res.out(err, docs);
+    });
+});
+
 
 app.get("/stats/candidato/:candidato", function(req, res, next){
     db.keywords.find({candidato: req.params.candidato}, {}, function(err, docs){
