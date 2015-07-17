@@ -6,7 +6,7 @@ module.exports = function(env){
         mongo: {
             host: "127.0.0.1"
             ,db: "tmetrics"
-            ,collections: ['keywords', 'candidatos', 'stats', 'hits', 'comments']
+            ,collections: ['keywords', 'candidatos', 'stats', 'hits', 'comments','admins']
         }
         ,express: {
             port: 1234

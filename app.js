@@ -5,6 +5,8 @@ var env = args['-env'] || "dev";
 var conf = require("./conf")(env);
 var mongojs = require("mongojs");
 var db = mongojs(conf.mongo.db, conf.mongo.collections);
+var cookieParser = require('cookie-parser')
+
 
 
 var context = {
@@ -23,6 +25,7 @@ var exphbs  = require('express-handlebars');
 
 
 app.use( bodyParser.urlencoded({ extended: true }) );
+app.use(cookieParser());
 app.engine('hbs', exphbs( {extname: '.hbs'}));
 
 app.set('view engine', 'hbs');
@@ -42,15 +45,18 @@ app.use(function(req, res, next){
            res.json({err: null, data: docs});
        }//end else
     };
+
+    console.log("Cookies: ", req.cookies);
     next();
 });
 
 var port = args['-port'] || 3500;
 
-//app.get("/", function(req, res, next){
-//   res.json({name:"tmetrics", version:"1.0.0"});
-//
-//});
+app.get("/admin", function(req, res, next){
+
+
+
+});
 
 
 
