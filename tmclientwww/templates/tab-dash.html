@@ -1,0 +1,16 @@
+<ion-view view-title="Candidatos">
+  <ion-content class="padding">
+
+
+    <div class="list card" ng-repeat="candidato in candidatos">
+      <div class="item item-divider">{{candidato.fname}} {{candidato.lname}} </div>
+      <div class="item item-body">
+        <div>
+          <b>Tweets: </b> {{candidato.count}}
+        </div>
+      </div>
+    </div>
+
+  </ion-content>
+</ion-view>
+

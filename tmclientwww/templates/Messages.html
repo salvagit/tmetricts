@@ -1,0 +1,35 @@
+<ion-view view-title="Mensajes">
+    <ion-content>
+
+        <div class="list">
+            <label class="item item-input">
+                <span class="input-label" >Nombre</span>
+                <input type="text" placeholder="Nombre" ng-model="message.name">
+            </label>
+
+            <label class="item item-input">
+                <span class="input-label" >Email</span>
+                <input type="email" placeholder="Su E-Mail" ng-model="message.email">
+            </label>
+
+
+            <label class="item item-input">
+                <span class="input-label">Mensaje</span>
+                <textarea placeholder="Escriba su mensaje" ng-model="message.message"></textarea>
+            </label>
+
+
+            <button class="button button-positive" ng-click="enviar()">
+                Enviar
+            </button>
+        </div>
+
+
+        <ul class="list">
+            <li class="item" ng-repeat="comment in comments">
+                <b>{{comment.added | date}} : {{comment.name}}</b>: {{comment.message}}
+            </li>
+        </ul>
+
+    </ion-content>
+</ion-view>

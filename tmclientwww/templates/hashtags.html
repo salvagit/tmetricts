@@ -1,0 +1,16 @@
+<ion-view view-title="Hashtags">
+    <ion-content class="padding">
+
+
+        <div class="list card" ng-repeat="keyword in keywords">
+            <div class="item item-divider">{{keyword.keyword}}</div>
+            <div class="item item-body">
+                <div>
+                    <b>Tweets: </b> {{keyword.count}}
+                </div>
+            </div>
+        </div>
+
+    </ion-content>
+</ion-view>
+
