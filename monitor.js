@@ -50,7 +50,7 @@ var tAction = function(tweet){
     var keys = [];
 
     for(var x=0; x<keywords.length; x++){
-        if(tweet.text.indexOf(keywords[x])>-1){
+        if(tweet.text.toLowerCase().indexOf(keywords[x].toLowerCase())>-1){
             console.log("DEBUG: >", tweet.text, keywords[x]);
             keys.push(keywords[x]);
         }
