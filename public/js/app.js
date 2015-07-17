@@ -17,7 +17,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
 
     }
     if (window.StatusBar) {
-      // org.apache.cordova.statusbar required
       StatusBar.styleLightContent();
     }
   });
@@ -25,53 +24,40 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
 
 .config(function($stateProvider, $urlRouterProvider, $httpProvider) {
 
-      $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded; charset=UTF-8';
-  // Ionic uses AngularUI Router which uses the concept of states
-  // Learn more here: https://github.com/angular-ui/ui-router
-  // Set up the various states which the app can be in.
-  // Each state's controller can be found in controllers.js
-  $stateProvider
+   $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded; charset=UTF-8';
 
-  // setup an abstract state for the tabs directive
-    .state('tab', {
-    url: '/tab',
-    abstract: true,
-    templateUrl: 'templates/tabs.html'
-  })
-
-  // Each tab has its own nav history stack:
-
-  .state('tab.dash', {
+   $stateProvider
+  .state('dash', {
     url: '/dash',
     views: {
-      'tab-dash': {
+      'viewpoint': {
         templateUrl: 'templates/tab-dash.html',
         controller: 'DashCtrl'
       }
     }
   })
 
-  .state('tab.hashtags', {
+  .state('hashtags', {
       url: '/hashtags',
       views: {
-        'tab-hashtags': {
+        'viewpoint': {
           templateUrl: 'templates/hashtags.html',
           controller: 'HashtagsCtrl'
         }
       }
     })
 
-  .state('tab.messages', {
+  .state('messages', {
     url: '/messages',
     views: {
-      'tab-messages': {
+      'viewpoint': {
         templateUrl: 'templates/Messages.html',
         controller: 'Messages'
       }
     }
   });
 
-  // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/tab/dash');
+
+  $urlRouterProvider.otherwise('/dash');
 
 });

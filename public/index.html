@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
-    <title></title>
+    <title>Tweetómetro</title>
 
     <link href="lib/ionic/css/ionic.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
@@ -23,7 +23,7 @@
     <script src="js/controllers.js"></script>
     <script src="js/services.js"></script>
   </head>
-  <body ng-app="starter">
+  <body ng-app="starter" class="platform-browser platform-cordova platform-webview">
     <!--
       The nav bar that will be updated as we navigate between views.
     -->
@@ -36,6 +36,19 @@
       Templates are in the /templates folder (but you could also
       have templates inline in this html file if you'd like).
     -->
-    <ion-nav-view></ion-nav-view>
+    <ion-nav-view name="viewpoint"></ion-nav-view>
+
+    <div class="bar bar-footer">
+      <ion-tabs class="tabs-icon-top tabs-color-active-positive">
+
+        <ion-tab title="Candidatos" icon-off="ion-person-stalker" icon-on="ion-person-stalker" href="#/dash"></ion-tab>
+        <ion-tab title="Hashtags" icon-off="ion-pound" icon-on="ion-pound" href="#/hashtags"></ion-tab>
+        <ion-tab title="Mensajes" icon-off="ion-email" icon-on="ion-email" href="#/messages"></ion-tab>
+
+      </ion-tabs>
+
+
+    </div>
+
   </body>
 </html>

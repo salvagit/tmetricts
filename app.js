@@ -47,11 +47,10 @@ app.use(function(req, res, next){
 
 var port = args['-port'] || 3500;
 
-app.get("/", function(req, res, next){
-
-   res.json({name:"tmetrics", version:"1.0.0"});
-
-});
+//app.get("/", function(req, res, next){
+//   res.json({name:"tmetrics", version:"1.0.0"});
+//
+//});
 
 
 

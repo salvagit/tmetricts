@@ -1,15 +1,14 @@
 
-var serverPath = "http://localhost.com.ar:2222";
+var serverPath = "http://tweetometro.com.ar";
 
 angular.module('starter.controllers', [])
 
 .controller('DashCtrl', function($scope, $http) {
-        console.log("Empezamos a trabajar: ", $scope);
+
 
       $http.get(serverPath+'/info/candidatos').
           success(function(data, status, headers, config) {
             $scope.candidatos = data.data;
-            console.log(data);
           }).
           error(function(data, status, headers, config) {
 
@@ -20,10 +19,9 @@ angular.module('starter.controllers', [])
 
 .controller('HashtagsCtrl', function($scope, $http) {
 
-      $http.get(serverPath+'/info/keywords').
+           $http.get(serverPath+'/info/keywords').
           success(function(data, status, headers, config) {
             $scope.keywords = data.data;
-            console.log(data);
           }).
           error(function(data, status, headers, config) {
 
@@ -34,6 +32,7 @@ angular.module('starter.controllers', [])
 
 .controller('Messages', function($scope, $http) {
 
+        
         $scope.message = {};
 
 
@@ -50,14 +49,11 @@ angular.module('starter.controllers', [])
 
 
         $scope.enviar = function(){
-          console.log("Hicieron click ", $scope.message);
             $http.post(serverPath+"/comment", $scope.message).
             success(function(data, status, headers, config){
-                    
                     getComments();
                 }).
                 error(function(data, status, headers, config){
-                    console.log("Error tratando de enviar el mensaje");
                 });
         };
 
