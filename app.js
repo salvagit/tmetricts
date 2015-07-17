@@ -63,7 +63,7 @@ app.get("/info/candidatos", function(req, res, nex){
 
 
 app.get("/info/keywords", function(req, res, nex){
-    db.keywords.find({}, {}, function(err, docs){
+    db.keywords.find({}, {}).sort({count:01}).toArray( function(err, docs){
         res.out(err, docs);
     });
 });
@@ -78,7 +78,7 @@ app.get("/stats/candidato/:candidato", function(req, res, next){
 
 app.get("/hits/key/:key", function(req, res, next){
     var k = "#"+req.params.key;
-    console.log(k);
+
     db.hits.find({keywords: { $in: [k]}}, {}, function(err, docs){
         res.out(err, docs);
     });
