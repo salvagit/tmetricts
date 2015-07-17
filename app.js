@@ -5,7 +5,7 @@ var env = args['-env'] || "dev";
 var conf = require("./conf")(env);
 var mongojs = require("mongojs");
 var db = mongojs(conf.mongo.db, conf.mongo.collections);
-var cookieParser = require('cookie-parser')
+var cookieParser = require('cookie-parser');
 
 
 
@@ -14,6 +14,12 @@ var context = {
     ,args: args
 
 };
+
+
+var candidatos = require("./libs/candidatos")(context);
+var admins = require("./libs/admins")(context);
+
+
 
 
 
@@ -32,6 +38,19 @@ app.set('view engine', 'hbs');
 app.set('views', './views');
 
 app.use(express.static(__dirname + '/public'));
+
+var session = require('express-session');
+
+
+app.use(session({
+    genid: function(req) {
+        return new Date().getTime()
+    },
+    secret: 'tmetric sessions key'
+    ,resave: true
+    ,saveUninitialized: true
+}));
+
 
 app.use(function(req, res, next){
 
@@ -52,13 +71,17 @@ app.use(function(req, res, next){
 
 var port = args['-port'] || 3500;
 
+
 app.get("/admin", function(req, res, next){
-
-
-
+    res.json({cookie: req.sessions});
 });
 
 
+
+app.get("/admin/login", function(req, res, next){
+
+    res.json({cookie: req.sessions});
+});
 
 
 app.get("/info/candidatos", function(req, res, nex){
