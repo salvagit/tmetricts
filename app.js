@@ -8,7 +8,6 @@ var db = mongojs(conf.mongo.db, conf.mongo.collections);
 var cookieParser = require('cookie-parser');
 
 
-
 var context = {
     db: db
     ,args: args
@@ -16,12 +15,9 @@ var context = {
 };
 
 
-var candidatos = require("./libs/candidatos")(context);
-var admins = require("./libs/admins")(context);
-
-
-
-
+var targets =  require("./libs/targets");
+var admins =   require("./libs/admins");
+var keywords = require("./libs/keywords");
 
 var express = require("express");
 var bodyParser = require('body-parser');
@@ -29,6 +25,10 @@ var app = new express();
 var exphbs  = require('express-handlebars');
 
 
+
+targets = new targets(context);
+admins = new admins(context);
+keywords = new keywords(context);
 
 app.use( bodyParser.urlencoded({ extended: true }) );
 app.use(cookieParser());
@@ -85,9 +85,14 @@ app.get("/admin/login", function(req, res, next){
 
 
 app.get("/info/candidatos", function(req, res, nex){
-   db.candidatos.find({}, {}).sort({count:-1}).toArray(function(err, docs){
-       res.out(err, docs);
-   });
+    targets.getAll()
+        .then(function(docs){
+            res.out(null, docs);
+        }, function(err){
+            res.out(err, null);
+        })
+
+
 });
 
 
@@ -155,6 +160,6 @@ app.get("/getcomments", function(req, res, next){
 
 
 var server = app.listen(port, function () {
-    console.log('Server creado');
+    console.log('Server started ', port);
 });
 

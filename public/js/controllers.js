@@ -1,5 +1,5 @@
 
-var serverPath = "http://tweetometro.com.ar";
+var serverPath = 'http://'+document.location.host;
 
 angular.module('starter.controllers', [])
 

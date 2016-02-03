@@ -31,4 +31,16 @@ targets.prototype.add = function(params){
 
 };
 
+
+targets.prototype.getAll = function(){
+  var self = this;
+
+    return new Promise(function(resolve, reject){
+        self.db.targets.find({}, {}).sort({count:-1}).toArray(function(err, docs){
+            if(err) reject('Error OOS200');
+            else resolve(docs);
+        });
+    });
+};
+
 module.exports = targets;

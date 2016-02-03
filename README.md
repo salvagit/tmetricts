@@ -28,3 +28,6 @@ Note: reeplace 56b24c445e005c01cca7dffc for you id returned after added the targ
 
 ## Run monitor
 
+<pre>
+node monitor
+</pre>
