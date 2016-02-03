@@ -1,11 +1,13 @@
-
-
+var debug = require('debug')('tmetrics:tool')
 var args = require('argsparser').parse();
 var env = args['-env'] || "dev";
 var conf = require("./conf")(env);
 var mongojs = require("mongojs");
 var db = mongojs(conf.mongo.db, conf.mongo.collections);
-
+var keywords = require("./libs/keywords");
+var hits = require("./libs/hits");
+var targets = require("./libs/targets");
+var admins = require("./libs/admins");
 
 var context = {
     db : db
@@ -13,15 +15,16 @@ var context = {
 };
 
 
-var candidatos = require("./libs/candidatos")(context);
-var admins = require("./libs/admins")(context);
 
+targets = new targets(context);
+admins = new admins(context);
+keywords = new keywords(context);
 var cmd = args['-cmd'] || "about";
 
 
 var about = function(){
     console.log(" Tools v1.0 ");
-    process.exit();
+    process.exit(0);
 };
 
 var admin = function(){
@@ -37,12 +40,12 @@ var admin = function(){
 
         if(params.email=="" || params.password=="") { console.log("faltan argumentos"); return;}
 
-        new admins().add(params, function(err, data){
-            if(err){ console.log("Error adding admin: ", params);}
-            else{ console.log("admin added");}
-        });
-
-
+        admins.add(params)
+            .then(function(data){
+                console.log('Added ');
+            }, function(err){
+                console.log('Error: ', err);
+            });
     };
 
     switch(act){
@@ -55,61 +58,64 @@ var admin = function(){
 };
 
 
-var candidato = function(){
-    console.log("module candidato");
+var target = function(){
     var act = args['-act'] || "";
 
 
     var add = function(){
         var params = {
             fname : args['-fname'] || ""
-        ,lname : args['-lname'] || ""
-        ,pol : args['-pol'] || ""
-        ,web : args['-web'] || ""
-        ,twitter : args['-twitter'] || ""
-        ,fanpage : args['-fanpage'] || ""
+            ,lname : args['-lname'] || ""
+            ,pol : args['-pol'] || ""
+            ,web : args['-web'] || ""
+            ,twitter : args['-twitter'] || ""
+            ,fanpage : args['-fanpage'] || ""
         }
 
-        new candidatos().add(params, function(err, data){
-            if(err){ console.log(err);}
-            else console.log("Candidato agregado ok");
-
-            process.exit();
-        });
+        targets.add(params)
+            .then(function(data) {
+                console.log("Target added: ", data._id);
+                process.exit(0);
+            }, function(err){
+                console.log('Error: ', err);
+                process.exit(1);
+            });
     };
 
 
 
     var addkey = function(){
         var key = args['-key'] || "";
-        var can = args['-can'] || "";
-        if(key=="" || can=="") {
+        var target = args['-target'] || "";
+        if(key=="" || target=="") {
             console.log("No key, error");
-            process.exit();
+            process.exit(1);
         }
 
-        new candidatos().addKey(can, key,function(err, dat){
-            if(err){ console.log(err); }
-            else{
-                console.log("la keyword fue agregada con éxito");
-            }
-            process.exit();
-        });
+        keywords.addKey(target, key)
+            .then(function(dat){
+                console.log('keywords added: ', dat);
+                process.exit(0);
+            }, function(err){
+                debug(err);
+                process.exit(1);
+            });
 
     };
 
     switch (act){
         case 'add': add(); break;
         case 'key': addkey(); break;
-        case '':default:
+        case '':
+        default:
             console.log("no act");
             break;
     }
 };
 
-console.log("CMD> ", cmd);
+console.log("CMD>", cmd);
 switch(cmd){
     case 'about': about(); break;
-    case 'candidato': candidato(); break;
+    case 'target': target(); break;
     case 'admin': admin(); break;
 }
