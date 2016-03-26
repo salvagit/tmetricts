@@ -14,23 +14,20 @@ targets.prototype.add = function(params){
     var twitter = params.twitter || "";
     var fanpage = params.fanpage || "";
 
-
     return new Promise(function(resolve, reject){
         self.db.targets.save({
-            fname : fname
-            ,lname: lname
-            ,pol : pol
-            ,web : web
-            ,twitter: twitter
-            ,fanpage: fanpage
+            fname : fname,
+            lname: lname,
+            pol : pol,
+            web : web,
+            twitter: twitter,
+            fanpage: fanpage
         }, function(err, docs){
             if(err) reject('Error TRG200');
             else resolve(docs);
         });
     });//end promise
-
 };
-
 
 targets.prototype.getAll = function(){
   var self = this;

@@ -5,7 +5,6 @@ function hits(context){
     self.db = context.db;
 };
 
-
 hits.prototype.save = function(){
     var self = this;
 
@@ -16,6 +15,5 @@ hits.prototype.save = function(){
         });
     });
 };
-
 
 module.exports = hits;

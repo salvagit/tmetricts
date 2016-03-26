@@ -10,17 +10,14 @@ var targets = require("./libs/targets");
 var admins = require("./libs/admins");
 
 var context = {
-    db : db
-    ,args : args
+    db : db,
+    args : args
 };
-
-
 
 targets = new targets(context);
 admins = new admins(context);
 keywords = new keywords(context);
 var cmd = args['-cmd'] || "about";
-
 
 var about = function(){
     console.log(" Tools v1.0 ");
@@ -32,11 +29,9 @@ var admin = function(){
 
     var addAdmin = function(){
         var params = {
-            email : args['-email'] || ""
-            , password : args['-password'] || ""
+            email : args['-email'] || "",
+            password : args['-password'] || ""
         };
-
-
 
         if(params.email=="" || params.password=="") { console.log("faltan argumentos"); return;}
 
@@ -58,18 +53,17 @@ var admin = function(){
 };
 
 
-var target = function(){
+var target = function() {
     var act = args['-act'] || "";
-
 
     var add = function(){
         var params = {
-            fname : args['-fname'] || ""
-            ,lname : args['-lname'] || ""
-            ,pol : args['-pol'] || ""
-            ,web : args['-web'] || ""
-            ,twitter : args['-twitter'] || ""
-            ,fanpage : args['-fanpage'] || ""
+            fname : args['-fname'] || "",
+            lname : args['-lname'] || "",
+            pol : args['-pol'] || "",
+            web : args['-web'] || "",
+            twitter : args['-twitter'] || "",
+            fanpage : args['-fanpage'] || ""
         }
 
         targets.add(params)
@@ -81,8 +75,6 @@ var target = function(){
                 process.exit(1);
             });
     };
-
-
 
     var addkey = function(){
         var key = args['-key'] || "";

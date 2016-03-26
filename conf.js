@@ -6,11 +6,12 @@ module.exports = function(env){
 
     conf.dev= {
         mongo: {
-            host: "127.0.0.1"
-            ,db: "tmetrics"
-            ,collections: ['keywords', 'targets', 'stats', 'hits', 'comments','admins']
-        }
-        ,express: {
+            host: "127.0.0.1",
+            db: "tmetrics",
+            collections: ['keywords', 'targets', 'stats', 'hits',
+                          'comments','admins']
+        },
+        express: {
             port: 1234
         }
     };

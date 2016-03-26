@@ -6,25 +6,20 @@ function keywords(context){
     self.init();
 };
 
-
-
-
 keywords.prototype.addKey = function(id, key){
-    var self  =this;
+    var self = this;
 
     return new Promise(function(resolve, reject){
         self.db.keywords.save({
-            keyword: key
-            ,target: id
-            ,count: 0
+            keyword: key,
+            target: id,
+            count: 0
         }, function(err, docs){
             if(err){ reject('Error FJF100'); }
             else resolve(docs);
         });
     });
-
 };
-
 
 keywords.prototype.process = function(hit){
 
@@ -38,20 +33,16 @@ keywords.prototype.process = function(hit){
         }//
     }//end for
 
-
     var $set = {
         process : true
         ,step1 : true
     };
 
-
     if(hit.keywords.length==0){
         $set.key = false;
     }
 
-
-    return new Promise(function(resolve, reject){
-
+    return new Promise(function(resolve, reject) {
         self.db.hits.update({_id: self.db.ObjectId(hit._id.toString())}
             ,{$set: $set}, function(err, d){
                 if(err){ reject(err);}
@@ -61,13 +52,11 @@ keywords.prototype.process = function(hit){
 
 };
 
-
 keywords.prototype.updateKeywordsStats = function(){
     var self = this;
     var targets = {};
 
-
-    return new Promise(function(resolve, reject){
+    return new Promise(function(resolve, reject) {
 
             for(var x in _this.keys){
                 var key = _this.keys[x];
@@ -75,7 +64,6 @@ keywords.prototype.updateKeywordsStats = function(){
                 typeof targets[key.target]=="undefined"
                     ? targets[key.target] = {count: key.count}
                     : targets[key.target].count+=key.count;
-
 
                 (function(k){
                     self.db.keywords.update({_id: self.db.ObjectId(k._id.toString())}
@@ -86,9 +74,7 @@ keywords.prototype.updateKeywordsStats = function(){
                 })(key);
             }//end for keywords
 
-
             for(var x in targets){
-
                 (function(can){
                     _this.db.targets.update({_id: _this.db.ObjectId(x)}
                         , {$set:{count: can.count}}, function(err, d){
@@ -102,23 +88,22 @@ keywords.prototype.updateKeywordsStats = function(){
     }); //end promise
 };
 
-keywords.prototype.loadKeywords = function(){
-var self = this;
+keywords.prototype.loadKeywords = function() {
+
+    var self = this;
     self.keys = {};
 
     return new Promise(function(resolve, reject){
         self.db.keywords.find({}, {}, function(err, keys){
             if(err) reject('Error FJF203')
             else {
-                for(var x=0; x<keys.length; x++){
-                    self.keys[keys[x].keyword] = {count: keys[x].count, target: keys[x].target, _id: keys[x]._id};
-                }//end for
+              for(var x=0; x<keys.length; x++){
+                self.keys[keys[x].keyword] = {count: keys[x].count, target: keys[x].target, _id: keys[x]._id};
+              }//end for
             } //end else
-
             resolve(self.keys);
         });
     });//end primise
-
 };
 
 keywords.prototype.getHits = function(){
@@ -152,7 +137,6 @@ keywords.prototype.getHits = function(){
             }else resolve();
         });
     });//end promises
-
 };
 
 keywords.prototype.init = function(){
@@ -168,7 +152,5 @@ keywords.prototype.init = function(){
     }, 1000);
 
 };
-
-
 
 module.exports = keywords;

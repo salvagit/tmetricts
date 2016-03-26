@@ -6,11 +6,9 @@
 var crypto = require('crypto');
 var shasum = crypto.createHash('md5');
 
-
 function admins(context){
     var self = this;
     self.db = context.db;
-
 };
 
 admins.prototype.add = function(params){
@@ -20,7 +18,6 @@ admins.prototype.add = function(params){
     var password = params.password || "";
 
     var ps = shasum.update(params.password).digest("hex");
-
 
     return new Promise(function(resolve, reject){
 
@@ -39,8 +36,7 @@ admins.prototype.add = function(params){
     });//end promise
 };
 
-
-admins.prototype.login = function(params){
+admins.prototype.login = function(params) {
 
     var self = this;
     var email = params.email || "";
@@ -63,6 +59,5 @@ admins.prototype.login = function(params){
     });
 
 };//end login
-
 
 module.exports = admins;
