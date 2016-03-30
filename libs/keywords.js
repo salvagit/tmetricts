@@ -14,7 +14,8 @@ keywords.prototype.addKey = function(id, key){
             keyword: key,
             target: id,
             count: 0
-        }, function(err, docs){
+        },
+        function(err, docs) {
             if(err){ reject('Error FJF100'); }
             else resolve(docs);
         });
@@ -34,11 +35,11 @@ keywords.prototype.process = function(hit){
     }//end for
 
     var $set = {
-        process : true
-        ,step1 : true
+        process : true,
+        step1 : true
     };
 
-    if(hit.keywords.length==0){
+    if(hit.keywords.length==0) {
         $set.key = false;
     }
 

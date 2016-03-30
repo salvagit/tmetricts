@@ -19,7 +19,6 @@ keywords = new keywords(context);
 var hits = require("./libs/hits");
 hits = new hits(context);
 
-
 var Twitter = require('node-twitter');
 var twitterStreamClient = new Twitter.StreamClient(
     'yd18NwzuM9lc1uaGlw', //CONSUMER_KEY
@@ -44,7 +43,8 @@ var trackKeywords = [];
 var tweetsStore = [];
 
 /**
- * on tweet.
+ * On Tweet.
+ *
  */
 var tAction = function(tweet) {
 
@@ -54,10 +54,13 @@ var tAction = function(tweet) {
         var isKey = tweet.text.toLowerCase().indexOf(trackKeywords[x].toLowerCase()) > -1;
         var isAr = tweet.place && "AR" === tweet.place.country_code;
         if( isKey && isAr ) {
-            console.log("TWEET: >", tweet.text, trackKeywords[x]);
-            console.log("TWEET: >", tweet);
+            console.log("TWEET: >", tweet.text);
             // increments keyword count.
-            db.keywords.update({keyword:trackKeywords[x]}, { $inc: {count: 1} });
+            var key = trackKeywords[x];
+            db.hits.count({keywords:key},function(a,count) {
+              db.keywords.update({keyword:key}, { "count": count });
+            });
+
             keys.push(trackKeywords[x]);
         }
     }//end for
